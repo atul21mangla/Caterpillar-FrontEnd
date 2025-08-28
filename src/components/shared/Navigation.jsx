@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import '../../styles/Navigation.css';
 import cat_img from '../../assets/Cat_logo.png';
 
-const Navigation = () => {
+const Navigation = ({ userButton }) => {
   const location = useLocation();
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard' },
@@ -32,6 +32,9 @@ const Navigation = () => {
             <span className="nav-label">{item.label}</span>
           </Link>
         ))}
+      </div>
+      <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        {typeof userButton !== 'undefined' && userButton}
       </div>
     </nav>
   );

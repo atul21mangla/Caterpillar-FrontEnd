@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Header from './components/shared/Header';
 import Navigation from './components/shared/Navigation';
+import Footer from './components/shared/Footer';
 import FleetCommandCenter from './components/Dashboard/FleetCommandCenter';
 import DigitalTwinView from './components/AssetDetail/DigitalTwinView';
 import QRModal from './components/CheckInOut/QRModal';
@@ -49,12 +50,10 @@ function App() {
         </SignedOut>
         <SignedIn>
           <div className="app">
-            <Navigation />
+            <Navigation userButton={<UserButton afterSignOutUrl="/" />} />
             <div className="main-content">
-              <Header />
-              <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '1rem 2rem' }}>
-                <UserButton afterSignOutUrl="/" />
-              </div>
+              <Header onScan={openModal} />
+              {/* UserButton now only appears in Navigation */}
               <Routes>
                 <Route path="/" element={<FleetCommandCenter onAssetSelect={handleAssetSelect} />} />
                 <Route path="/analytics" element={<Analytics />} />
@@ -65,7 +64,8 @@ function App() {
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/asset-detail" element={selectedAsset ? <DigitalTwinView asset={selectedAsset} /> : null} />
               </Routes>
-              {showModal && <QRModal onClose={closeModal} />}
+              <QRModal isOpen={showModal} onClose={closeModal} />
+              <Footer />
             </div>
           </div>
         </SignedIn>
